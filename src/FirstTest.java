@@ -38,23 +38,58 @@ public class  FirstTest{
     }
     @Test
 
-    public void firstTest()
-    {
+    public void firstTest() {
         assertElementHasText(
-                By.xpath("//*[contains(@text,'Featured article')]"),
-                "Cannot find Featured article",
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find Search Wikipedia",
                 5
 
-       );
+        );
 
 
-            assertElementHasText(
-                    By.xpath("//*[contains(@text,'Search Wikipedia')]"),
-                    "Cannot find Search Wikipedia",
-                    5
+        elementsClick(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot click Featured article",
+                5
 
-            );
-     }
+        );
+
+        elementsSendKey(
+                By.xpath("//*[contains(@text,'Search…')]"),
+                "article",
+                "Cannot click Featured article",
+                5
+
+        );
+
+        assertElementHasText(
+                By.xpath("//*[contains(@text,'Wikimedia disambiguation page')]"),
+                "Cannot find 'Wikimedia disambiguation page'",
+                5
+
+        );
+        waiteElementAndClear(
+                By.id("org.wikipedia:id/search_src_text"),
+                "Cannot find serch field",
+                5
+
+        );
+
+        elementsClick(
+                By.id("org.wikipedia:id/search_container"),
+                "Cannot click крестик",
+                5
+
+        );
+        assertElementHasText(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find Search Wikipedia",
+                5
+
+        );
+
+    }
+
 
     private WebElement assertElementHasText(By by, String error_message, long timeoutInSeconds)
 {
@@ -65,6 +100,29 @@ public class  FirstTest{
 
     );
 }
+
+    private WebElement elementsClick(By by, String error_message, long timeoutInSeconds)
+    {
+        WebElement element = assertElementHasText(by,error_message,timeoutInSeconds);
+        element.click();
+        return element;
+
+
+    }
+    private WebElement elementsSendKey(By by, String value, String error_message, long timeoutInSeconds)
+    {
+        WebElement element = assertElementHasText(by, error_message, timeoutInSeconds);
+        element.sendKeys(value);
+        return element;
+
+
+    }
+    private WebElement waiteElementAndClear(By by, String value, long timeoutInSeconds) {
+        WebElement element = assertElementHasText(by, value, timeoutInSeconds);
+
+        element.clear();
+        return element;
+    }
 
     }
 
